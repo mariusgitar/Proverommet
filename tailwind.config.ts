@@ -7,7 +7,12 @@ export default {
     './lib/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-dm-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-dm-serif-display)', 'ui-serif', 'Georgia', 'serif'],
+      },
+    },
   },
   plugins: [],
 } satisfies Config;
