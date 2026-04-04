@@ -1,4 +1,7 @@
+'use client';
+
 import type { Product } from '@/content/products';
+import { useReaction } from '@/hooks/useReaction';
 
 interface ProductCardProps {
   product: Product;
@@ -17,6 +20,8 @@ const statusLabel: Record<Product['status'], string> = {
 };
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { count, hasReacted, react } = useReaction(product.slug);
+
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
       <header className={`flex items-start justify-between px-4 py-3 ${product.color}`}>
@@ -51,8 +56,16 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
 
         <div className="flex items-center gap-2 border-t border-slate-100 pt-3 text-sm text-slate-600">
-          <span aria-hidden="true">👍</span>
-          <span>0</span>
+          <button
+            type="button"
+            onClick={react}
+            disabled={hasReacted}
+            className="rounded px-2 py-1 disabled:cursor-not-allowed disabled:opacity-50"
+            aria-label={`React to ${product.name}`}
+          >
+            👍
+          </button>
+          <span>{count}</span>
         </div>
       </div>
     </article>
