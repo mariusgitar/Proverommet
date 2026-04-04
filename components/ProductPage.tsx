@@ -1,5 +1,7 @@
 'use client';
 
+import type { ReactNode } from 'react';
+
 import Link from 'next/link';
 
 import type { Product } from '@/content/products';
@@ -8,6 +10,7 @@ import { useReaction } from '@/hooks/useReaction';
 
 interface ProductPageProps {
   product: Product;
+  demo?: ReactNode;
 }
 
 const statusStyles: Record<Product['status'], string> = {
@@ -22,7 +25,7 @@ const statusLabel: Record<Product['status'], string> = {
   eksperiment: 'Eksperiment',
 };
 
-export function ProductPage({ product }: ProductPageProps) {
+export function ProductPage({ product, demo }: ProductPageProps) {
   const { count, hasReacted, react } = useReaction(product.slug);
   const categoryLabel = productCategories.find((category) => category.value === product.category)?.label ?? product.category;
 
@@ -85,12 +88,14 @@ export function ProductPage({ product }: ProductPageProps) {
 
         <section id="demo" className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
           <h2 className="mb-6 font-serif text-3xl text-slate-900">Demo</h2>
-          <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
-            <span className="text-6xl" aria-hidden="true">
-              {product.emoji}
-            </span>
-            <p className="text-lg font-medium text-slate-700">Demo kommer</p>
-          </div>
+          {demo ?? (
+            <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+              <span className="text-6xl" aria-hidden="true">
+                {product.emoji}
+              </span>
+              <p className="text-lg font-medium text-slate-700">Demo kommer</p>
+            </div>
+          )}
         </section>
 
         <footer className="pb-4 text-center text-sm text-slate-600">
