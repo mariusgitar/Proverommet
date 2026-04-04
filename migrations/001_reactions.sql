@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS reactions (
+  id SERIAL PRIMARY KEY,
+  product_slug TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
