@@ -1,4 +1,7 @@
-import { PageTitle } from '@/components/page-title';
+import { notFound } from 'next/navigation';
+
+import { ProductPage } from '@/components/ProductPage';
+import { products } from '@/content/products';
 
 interface SlugPageProps {
   params: {
@@ -7,5 +10,11 @@ interface SlugPageProps {
 }
 
 export default function SlugPage({ params }: SlugPageProps) {
-  return <PageTitle title={params.slug} />;
+  const product = products.find((item) => item.slug === params.slug);
+
+  if (!product) {
+    notFound();
+  }
+
+  return <ProductPage product={product} />;
 }
