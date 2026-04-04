@@ -25,23 +25,49 @@ const votingItems = [
 ];
 
 const resultVotes = [18, 15, 12, 8, 6];
+const userResultVotes = [7, 6, 5, 4];
+
+const hardcodedVotingItems = votingItems.map((label, index) => ({
+  id: `hardcoded-${index}`,
+  label,
+}));
 
 export function SammenDemo() {
   const [screen, setScreen] = useState<Screen>('innspill');
   const [inputValue, setInputValue] = useState('');
-  const [myInputs, setMyInputs] = useState<string[]>([]);
+  const [userInnspill, setUserInnspill] = useState<string[]>([]);
+  const [userVotes, setUserVotes] = useState<Record<string, number>>({});
   const [showOthers, setShowOthers] = useState(false);
-  const [votes, setVotes] = useState<number[]>(Array(votingItems.length).fill(0));
 
-  const totalVotes = votes.reduce((sum, value) => sum + value, 0);
+  const allVotingItems = useMemo(
+    () => [
+      ...userInnspill.map((label, index) => ({ id: `user-${index}`, label, isUserItem: true })),
+      ...hardcodedVotingItems.map((item) => ({ ...item, isUserItem: false })),
+    ],
+    [userInnspill],
+  );
+
+  const totalVotes = Object.values(userVotes).reduce((sum, value) => sum + value, 0);
   const remainingVotes = 5 - totalVotes;
 
   const sortedResults = useMemo(
     () =>
-      votingItems
-        .map((label, index) => ({ label, votes: resultVotes[index] }))
+      [
+        ...userInnspill.map((label, index) => ({
+          id: `user-${index}`,
+          label,
+          votes: userResultVotes[index % userResultVotes.length],
+          isUserItem: true,
+        })),
+        ...hardcodedVotingItems.map((item, index) => ({
+          id: item.id,
+          label: item.label,
+          votes: resultVotes[index],
+          isUserItem: false,
+        })),
+      ]
         .sort((a, b) => b.votes - a.votes),
-    [],
+    [userInnspill],
   );
 
   const addInput = () => {
@@ -50,12 +76,12 @@ export function SammenDemo() {
       return;
     }
 
-    setMyInputs((current) => [trimmed, ...current]);
+    setUserInnspill((current) => [trimmed, ...current]);
     setInputValue('');
   };
 
-  const setVoteCount = (itemIndex: number, dotIndex: number) => {
-    const currentCount = votes[itemIndex];
+  const setVoteCount = (itemId: string, dotIndex: number) => {
+    const currentCount = userVotes[itemId] ?? 0;
     const wantedCount = currentCount === dotIndex + 1 ? dotIndex : dotIndex + 1;
     const delta = wantedCount - currentCount;
 
@@ -63,7 +89,7 @@ export function SammenDemo() {
       return;
     }
 
-    setVotes((current) => current.map((value, index) => (index === itemIndex ? wantedCount : value)));
+    setUserVotes((current) => ({ ...current, [itemId]: wantedCount }));
   };
 
   return (
@@ -112,8 +138,8 @@ export function SammenDemo() {
             </button>
           </div>
 
-          {myInputs.map((entry) => (
-            <div key={entry} className="flex gap-3 rounded-xl border border-[#e2e8f0] bg-white p-3">
+          {userInnspill.map((entry, index) => (
+            <div key={`${entry}-${index}`} className="flex gap-3 rounded-xl border border-[#e2e8f0] bg-white p-3">
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#dbe4ff] text-xs font-semibold text-[#3b5bdb]">
                 DU
               </span>
@@ -147,7 +173,11 @@ export function SammenDemo() {
             ) : null}
           </div>
 
-          <button type="button" className="sticky bottom-0 w-full rounded-xl bg-[#3b5bdb] px-4 py-3 text-sm font-semibold text-white">
+          <button
+            type="button"
+            onClick={() => setScreen('stemming')}
+            className="sticky bottom-0 w-full rounded-xl bg-[#3b5bdb] px-4 py-3 text-sm font-semibold text-white"
+          >
             Lever svar →
           </button>
         </div>
@@ -161,18 +191,25 @@ export function SammenDemo() {
             <p className="mt-1 text-sm text-[#64748b]">Gjenstående prikker: {remainingVotes}</p>
           </div>
 
-          {votingItems.map((item, itemIndex) => (
-            <div key={item} className="rounded-xl border border-[#e2e8f0] bg-white p-4">
-              <p className="mb-3 text-sm">{item}</p>
+          {allVotingItems.map((item) => (
+            <div key={item.id} className="rounded-xl border border-[#e2e8f0] bg-white p-4">
+              <div className="mb-3 flex items-start justify-between gap-2">
+                <p className="text-sm">{item.label}</p>
+                {item.isUserItem ? (
+                  <span className="rounded-full border border-[#93c5fd] px-2 py-0.5 text-[10px] font-semibold text-[#1d4ed8]">
+                    Ditt innspill
+                  </span>
+                ) : null}
+              </div>
               <div className="flex gap-2">
                 {Array.from({ length: 5 }).map((_, dotIndex) => {
-                  const isActive = dotIndex < votes[itemIndex];
+                  const isActive = dotIndex < (userVotes[item.id] ?? 0);
 
                   return (
                     <button
                       key={dotIndex}
                       type="button"
-                      onClick={() => setVoteCount(itemIndex, dotIndex)}
+                      onClick={() => setVoteCount(item.id, dotIndex)}
                       className={`h-7 w-7 rounded-full border ${
                         isActive ? 'border-[#3b5bdb] bg-[#3b5bdb]' : 'border-[#cbd5e1] bg-white'
                       }`}
@@ -212,6 +249,11 @@ export function SammenDemo() {
                   <p className="text-sm font-medium">{item.label}</p>
                   <span className="text-sm font-semibold text-[#3b5bdb]">{item.votes}</span>
                 </div>
+                {item.isUserItem ? (
+                  <span className="mb-2 inline-block rounded-full border border-[#93c5fd] px-2 py-0.5 text-[10px] font-semibold text-[#1d4ed8]">
+                    Ditt innspill
+                  </span>
+                ) : null}
                 {index === 0 ? (
                   <span className="mb-2 inline-block rounded-full bg-[#dbe4ff] px-2 py-1 text-xs font-semibold text-[#3b5bdb]">
                     🏆 Mest stemt
