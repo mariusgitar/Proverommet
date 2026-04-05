@@ -1,5 +1,6 @@
 'use client';
 
+import confetti from 'canvas-confetti';
 import { Inter } from 'next/font/google';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -158,6 +159,7 @@ export function UkespeilDemo() {
     <div className="space-y-3">
       {projects.map((project) => {
         const value = bucket === 'plan' ? (planHours[project.id] ?? 0) : (actualHours[project.id] ?? 0);
+        const plannedValue = planHours[project.id] ?? 0;
         const muted = value === 0;
 
         return (
@@ -167,7 +169,12 @@ export function UkespeilDemo() {
             style={{ borderLeftWidth: '6px', borderLeftColor: project.color }}
           >
             <div className="mb-3 flex items-center justify-between gap-2">
-              <h4 className="text-sm font-semibold text-slate-800">{project.name}</h4>
+              <h4 className="text-sm font-semibold text-slate-800">
+                {project.name}
+                {bucket === 'actual' ? (
+                  <span className="ml-2 text-xs font-medium text-slate-500">Plan: {plannedValue}t</span>
+                ) : null}
+              </h4>
               <span
                 className={`rounded-full px-2 py-1 text-xs font-semibold ${muted ? 'bg-slate-100 text-slate-500' : 'bg-indigo-50 text-indigo-700'}`}
               >
@@ -180,7 +187,7 @@ export function UkespeilDemo() {
                 <button
                   key={`${bucket}-${project.id}-${hoursValue}`}
                   type="button"
-                  onClick={() => setHours(bucket, project.id, hoursValue)}
+                  onClick={() => setHours(bucket, project.id, value === hoursValue ? 0 : hoursValue)}
                   className={`rounded-lg border px-2.5 py-1.5 text-xs font-medium transition ${
                     value === hoursValue
                       ? 'border-indigo-200 bg-indigo-50 text-indigo-700'
@@ -250,12 +257,14 @@ export function UkespeilDemo() {
 
   return (
     <div
-      className={`${inter.className} mx-auto w-full max-w-[390px] rounded-[2rem] border border-white/80 bg-gradient-to-br from-[#f6f5fb] to-[#e8defb] p-4 text-slate-900 shadow-[0_20px_50px_rgba(15,23,42,0.15)]`}
+      className={`${inter.className} mx-auto w-full max-w-[390px] rounded-[2rem] border border-white/80 p-4 text-slate-900 shadow-[0_20px_50px_rgba(15,23,42,0.15)] ${
+        step === 'planlegging' ? 'bg-[#ffffff]' : 'bg-gradient-to-br from-[#f6f5fb] to-[#e8defb]'
+      }`}
     >
       {step === 'planlegging' ? (
         <div className="space-y-4">
           <header className="rounded-3xl border border-white/80 bg-white/85 p-4 shadow-lg">
-            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-700">Planlegging</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-700">PLANLEGGING</p>
             <h3 className="mt-1 text-xl font-semibold">Planlegg uka</h3>
             <p className="text-sm text-slate-600">Uke 15 · 7.–11. april</p>
           </header>
@@ -281,32 +290,20 @@ export function UkespeilDemo() {
       {step === 'registrering' ? (
         <div className="space-y-4">
           <header className="rounded-3xl border border-white/80 bg-white/85 p-4 shadow-lg">
-            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-700">Registrering</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-700">REGISTRERING</p>
             <h3 className="mt-1 text-xl font-semibold">Faktisk tid denne uka</h3>
-            <p className="text-sm text-slate-600">Juster timer og se treffscore live.</p>
+            <p className="text-sm text-slate-600">Sammenlign med planen din</p>
           </header>
 
           {renderProjectCards('actual')}
 
-          {hasFilledActual ? (
-            <section className="space-y-3 rounded-3xl border border-white/80 bg-white/85 p-4 shadow-lg">
-              <div className="flex items-center justify-between">
-                <h4 className="text-sm font-semibold text-slate-700">Treffscore</h4>
-                <span className="rounded-full bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-700">Live</span>
-              </div>
-              <p className="text-4xl font-bold text-slate-900">
-                <AnimatedScore value={score} />
-                <span className="text-xl text-slate-500">/100</span>
-              </p>
-              <p className="text-sm font-medium text-slate-700">{interpretation(score)}</p>
-              {renderComparisonRows()}
-            </section>
-          ) : null}
-
           {!isSubmitted ? (
             <button
               type="button"
-              onClick={() => setIsSubmitted(true)}
+              onClick={() => {
+                confetti({ particleCount: 120, spread: 70, origin: { y: 0.7 } });
+                setIsSubmitted(true);
+              }}
               disabled={!hasFilledActual}
               className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-400"
             >
