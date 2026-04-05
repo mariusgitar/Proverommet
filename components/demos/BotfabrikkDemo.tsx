@@ -163,9 +163,9 @@ export function BotfabrikkDemo() {
 
   return (
     <div
-      className={`${inter.className} relative mx-auto w-full max-w-[680px] overflow-hidden rounded-3xl border border-[#e2e8f0] bg-white text-[#0f172a]`}
+      className={`${inter.className} relative mx-auto w-full max-w-[680px] rounded-3xl border border-[#e2e8f0] bg-white text-[#0f172a]`}
     >
-      <div className="max-h-[820px] space-y-10 overflow-y-auto p-6 sm:p-8">
+      <div className="space-y-10 p-6 sm:p-8">
         <section className="space-y-5">
           <div className="space-y-3">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6d28d9]">Botfabrikken</p>
