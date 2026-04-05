@@ -1,7 +1,7 @@
 'use client';
 
 import { Inter } from 'next/font/google';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -107,7 +107,6 @@ function buildPolyline(values: number[]) {
 }
 
 export function ByggesaksdashDemo() {
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [demoState, setDemoState] = useState<DemoState>('upload');
   const [processingText, setProcessingText] = useState('Analyserer Websak-eksport...');
   const [selectedWeek, setSelectedWeek] = useState<WeekId>('14');
@@ -144,10 +143,6 @@ export function ByggesaksdashDemo() {
 
   const selectedWeekIndex = Number(selectedWeek) - 12;
 
-  const openFilePicker = () => {
-    fileInputRef.current?.click();
-  };
-
   const startProcessing = () => {
     setDemoState('processing');
   };
@@ -156,9 +151,6 @@ export function ByggesaksdashDemo() {
     setDemoState('upload');
     setProcessingText('Analyserer Websak-eksport...');
     setSelectedWeek('14');
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
   };
 
   const ufordeltTrendClass =
@@ -176,19 +168,18 @@ export function ByggesaksdashDemo() {
             <div className="mb-4 text-6xl">🏗️</div>
             <h3 className="text-2xl font-semibold text-[#0f172a]">Last opp ukeseksport</h3>
             <p className="mt-2 text-sm text-[#64748b]">
-              Dra inn XLSX-fil fra Websak,
+              Klikk på feltet under for å se hvordan
               <br />
-              eller klikk for å velge
+              dashboardet oppdateres med nye data.
             </p>
 
-            <button
-              type="button"
-              onClick={openFilePicker}
+            <div
+              onClick={startProcessing}
               className="mt-6 w-full cursor-pointer rounded-2xl border-2 border-dashed border-[#cbd5e1] bg-white p-10 text-center transition hover:bg-slate-50"
             >
-              <p className="text-sm font-medium text-[#64748b]">Klikk for å velge .xlsx-fil</p>
-            </button>
-            <input ref={fileInputRef} type="file" accept=".xlsx" className="hidden" onChange={startProcessing} />
+              <p className="text-sm font-medium text-[#64748b]">Klikk for å simulere opplasting</p>
+              <p className="mt-2 text-xs text-[#94a3b8]">Dette er en demo — ingen fil lastes faktisk opp</p>
+            </div>
 
             <p className="mt-4 text-xs text-[#94a3b8]">Støtter .xlsx fra Websak · Ingen data forlater nettleseren</p>
           </div>
