@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { DailyBrianDemo } from '@/components/demos/DailyBrianDemo';
 import { SammenDemo } from '@/components/demos/SammenDemo';
 import { UkespeilDemo } from '@/components/demos/UkespeilDemo';
+import { BotfabrikkDemo } from '@/components/demos/BotfabrikkDemo';
 import { ProductPage } from '@/components/ProductPage';
 import { LommeknivDemo } from '@/components/demos/LommeknivDemo';
 import { products } from '@/content/products';
@@ -29,7 +30,9 @@ export default function SlugPage({ params }: SlugPageProps) {
           ? <DailyBrianDemo />
           : product.slug === 'byrakratens-lommekniv'
             ? <LommeknivDemo />
-            : undefined;
+            : product.slug === 'botfabrikk'
+              ? <BotfabrikkDemo />
+              : undefined;
 
   return <ProductPage product={product} demo={demo} />;
 }
