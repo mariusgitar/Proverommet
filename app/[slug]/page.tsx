@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import { SammenDemo } from '@/components/demos/SammenDemo';
+import { UkespeilDemo } from '@/components/demos/UkespeilDemo';
 import { ProductPage } from '@/components/ProductPage';
 import { products } from '@/content/products';
 
@@ -17,7 +18,8 @@ export default function SlugPage({ params }: SlugPageProps) {
     notFound();
   }
 
-  const demo = product.slug === 'sammen' ? <SammenDemo /> : undefined;
+  const demo =
+    product.slug === 'sammen' ? <SammenDemo /> : product.slug === 'ukespeil' ? <UkespeilDemo /> : undefined;
 
   return <ProductPage product={product} demo={demo} />;
 }
