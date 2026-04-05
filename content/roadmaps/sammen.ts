@@ -1,10 +1,204 @@
-import type { Roadmap } from '@/content/roadmaps/types';
+import type { Roadmap } from './types'
 
 export const roadmap: Roadmap = {
   slug: 'sammen',
   updatedAt: 'April 2026',
-  version: 'v0.1',
-  modules: [],
-  directions: [],
-  principles: [],
-};
+  version: 'v0.9',
+  modules: [
+    {
+      name: 'Åpne innspill',
+      emoji: '💬',
+      color: '#dde4fb',
+      status: 'done',
+      features: [
+        { text: 'Spørsmål/seksjoner med manuell/auto synlighet', status: 'done' },
+        { text: 'Gruppetenk-beskyttelse (skjul andres innspill)', status: 'done' },
+        { text: 'Enkel og detaljert innspillsformat med tegnbegrensning', status: 'done' },
+        { text: 'Kanban-visning på desktop', status: 'done' },
+        { text: 'AI-tematisering (Mixtral via OpenRouter)', status: 'done' },
+        { text: 'Manuell redigering av temaer', status: 'done' },
+        { text: 'Resultater til deltakere med temavisning', status: 'done' },
+        { text: 'Stemming på temaer/innspill', status: 'partial' },
+      ],
+    },
+    {
+      name: 'Stemming',
+      emoji: '🗳️',
+      color: '#d4ede0',
+      status: 'done',
+      features: [
+        { text: 'Dot voting med dynamiske prikker', status: 'done' },
+        { text: 'Spre vs. stable prikker', status: 'done' },
+        { text: 'Skala 1–5', status: 'done' },
+        { text: 'Live resultater i admin med fargekoding', status: 'done' },
+        { text: 'Resultater til deltakere', status: 'done' },
+        { text: 'Presentasjonsmodus med animert podium', status: 'done' },
+        { text: 'Stemming på temaer + innspill samtidig', status: 'partial' },
+      ],
+    },
+    {
+      name: 'Kartlegging',
+      emoji: '🗂️',
+      color: '#fdefd2',
+      status: 'done',
+      features: [
+        { text: 'Fasilitatordefinerte tags', status: 'done' },
+        { text: 'Deltakere tagger elementer', status: 'done' },
+        { text: 'Tre resultatvisninger: per element, per tag, uenighet', status: 'done' },
+        { text: 'Uenighet-badge for splittet stemming', status: 'done' },
+        { text: 'Overgang til stemming etter kuratering', status: 'done' },
+        { text: 'Eksport i to formater', status: 'done' },
+      ],
+    },
+    {
+      name: 'Rangering',
+      emoji: '📊',
+      color: '#ede9fe',
+      status: 'done',
+      features: [
+        { text: 'Drag-and-drop med dnd-kit', status: 'done' },
+        { text: 'Touch-støtte (mobil)', status: 'done' },
+        { text: 'Snitt-posisjon aggregering', status: 'done' },
+        { text: 'Maks antall å rangere', status: 'done' },
+        { text: 'Resultater med konsensus-indikator', status: 'done' },
+      ],
+    },
+    {
+      name: 'Presentasjonsmodus',
+      emoji: '🖥️',
+      color: '#f0f9ff',
+      status: 'partial',
+      features: [
+        { text: 'Storskjermvisning /vis/[kode]', status: 'done' },
+        { text: 'Ventemodus med QR-kode', status: 'done' },
+        { text: 'Temakolonner for åpne innspill', status: 'done' },
+        { text: 'Stemmeresultater med farger', status: 'done' },
+        { text: 'Animerte reveals', status: 'partial' },
+        { text: 'Ordsky for fri tekst', status: 'partial' },
+      ],
+    },
+    {
+      name: 'Infrastruktur',
+      emoji: '⚙️',
+      color: '#f8fafc',
+      status: 'done',
+      features: [
+        { text: 'Admin-autentisering med cookie', status: 'done' },
+        { text: 'Lys/mørk tema (deltaker/admin)', status: 'done' },
+        { text: 'Progressive disclosure i /ny', status: 'done' },
+        { text: 'Slett/arkiver sesjoner', status: 'done' },
+        { text: 'Eksport (liste + referat)', status: 'done' },
+        { text: 'Nickname-persistering via localStorage', status: 'done' },
+        { text: 'Prosjektgruppering', status: 'partial' },
+      ],
+    },
+  ],
+  directions: [
+    {
+      emoji: '🎭',
+      title: 'Presentasjonsløft',
+      description: 'Gjøre presentasjonsmodus så bra at det erstatter Mentimeter for de fleste brukstilfeller.',
+      effort: 'low',
+      items: [
+        'Animerte reveals kontrollert av fasilitator',
+        'Ordsky-visualisering for fri tekst',
+        'Fullskjerm-modus uten nettleser-chrome',
+        'Større typografi og mer luft',
+      ],
+    },
+    {
+      emoji: '📋',
+      title: 'Mal-bibliotek',
+      description: 'Ferdig oppsatte workshop-formater som fasilitator kan bruke som utgangspunkt.',
+      effort: 'low',
+      items: [
+        'Retrospektiv (Start/Stop/Fortsett)',
+        'Prioriteringsverksted',
+        'Idémyldring + stemming',
+        'Kriterieverksted',
+      ],
+    },
+    {
+      emoji: '🗂️',
+      title: 'Prosjektgruppering',
+      description: 'Samle sesjoner under ett prosjekt. En workshop = ett prosjekt med flere sesjoner.',
+      effort: 'mid',
+      items: [
+        'Projects-tabell i databasen',
+        'Prosjektoversikt i admin',
+        'Sesjoner koblet til prosjekt',
+        'Eksport per prosjekt',
+      ],
+    },
+    {
+      emoji: '🤖',
+      title: 'Mer AI-assistanse',
+      description: 'Bygge videre på tematiseringen med flere LLM-drevne funksjoner.',
+      effort: 'mid',
+      items: [
+        'AI-generert workshop-oppsummering',
+        'Foreslå oppfølgingsspørsmål',
+        'Identifiser mønstre på tvers av sesjoner',
+        'Eksporter til strukturert møtereferat',
+      ],
+    },
+    {
+      emoji: '📱',
+      title: 'Asynkron modus',
+      description: 'Samme verktøy, men deltakere svarer i løpet av dager — ikke i sanntid.',
+      effort: 'mid',
+      items: [
+        'Deadline-funksjon per sesjon',
+        'E-post/link-invitasjon til deltakere',
+        'Fasilitator ser innkommende svar over tid',
+        'Passer for distribuerte team',
+      ],
+    },
+    {
+      emoji: '🔬',
+      title: 'Tjenestedesign-verktøy',
+      description: 'Separate verktøy for brukerforskningsfasen — kortsortering, surveys, brukertesting.',
+      effort: 'high',
+      items: [
+        'Kortsortering (card sorting)',
+        'Enkle surveys med ulike spørsmålstyper',
+        'A/B-testing av konsepter',
+        'Bør vurderes som egen app',
+      ],
+    },
+  ],
+  principles: [
+    {
+      emoji: '🎯',
+      title: 'Fasilitatorstyrt',
+      description: 'Fasilitator bestemmer hva deltakere ser og når. Deltakere skal aldri vente eller lure på hva de skal gjøre.',
+    },
+    {
+      emoji: '📱',
+      title: 'Mobil-først for deltakere',
+      description: 'Deltakersidene er designet for telefon. Admin fungerer best på laptop/nettbrett.',
+    },
+    {
+      emoji: '🔄',
+      title: 'Sekvensert flyt',
+      description: 'Innsamling → Kuratering → Stemming → Resultater. Output fra ett steg er input til neste.',
+    },
+    {
+      emoji: '✂️',
+      title: 'Synkront, ikke asynkront',
+      description: 'Sammen er bygget for rom der alle er tilstede. Asynkrone brukstilfeller vurderes separat.',
+    },
+    {
+      emoji: '💡',
+      title: 'Actionable output',
+      description: 'Resultater skal ikke bare være synlige — de skal gi fasilitator noe å handle på.',
+    },
+    {
+      emoji: '🏗️',
+      title: 'Én primitiv, mange moduser',
+      description: 'Kjernen er: liste med elementer + deltakere som responderer. Alle moduler er varianter av dette.',
+    },
+  ],
+}
+
+export default roadmap
