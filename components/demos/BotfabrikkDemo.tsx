@@ -1,7 +1,7 @@
 'use client';
 
 import { Inter } from 'next/font/google';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -88,8 +88,10 @@ varslingsrutiner klare.`,
 ];
 
 interface ChatEntry {
+  id: string;
   question: string;
-  answer: string;
+  answer: string | null;
+  isThinking: boolean;
 }
 
 export function BotfabrikkDemo() {
@@ -98,6 +100,7 @@ export function BotfabrikkDemo() {
   const [chatEntries, setChatEntries] = useState<ChatEntry[]>([]);
   const [showEmail, setShowEmail] = useState(false);
   const [copied, setCopied] = useState(false);
+  const timeoutRefs = useRef<number[]>([]);
 
   const canSend = inputValue.trim().length > 0;
 
@@ -122,6 +125,12 @@ export function BotfabrikkDemo() {
     setChatEntries([]);
   };
 
+  useEffect(() => {
+    return () => {
+      timeoutRefs.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
+  }, []);
+
   const submitQuestion = (questionInput?: string) => {
     if (!activeBot) {
       return;
@@ -132,8 +141,17 @@ export function BotfabrikkDemo() {
       return;
     }
 
+    const id = `${Date.now()}-${Math.random()}`;
     const answer = activeBot.responses[question] ?? demoFallbackResponse;
-    setChatEntries((current) => [...current, { question, answer }]);
+
+    setChatEntries((current) => [...current, { id, question, answer: null, isThinking: true }]);
+
+    const timeoutId = window.setTimeout(() => {
+      setChatEntries((current) =>
+        current.map((entry) => (entry.id === id ? { ...entry, answer, isThinking: false } : entry)),
+      );
+    }, 1200);
+    timeoutRefs.current.push(timeoutId);
     setInputValue('');
   };
 
@@ -144,7 +162,9 @@ export function BotfabrikkDemo() {
   };
 
   return (
-    <div className={`${inter.className} mx-auto w-full max-w-[680px] overflow-hidden rounded-3xl border border-[#e2e8f0] bg-white text-[#0f172a]`}>
+    <div
+      className={`${inter.className} relative mx-auto w-full max-w-[680px] overflow-hidden rounded-3xl border border-[#e2e8f0] bg-white text-[#0f172a]`}
+    >
       <div className="max-h-[820px] space-y-10 overflow-y-auto p-6 sm:p-8">
         <section className="space-y-5">
           <div className="space-y-3">
@@ -160,7 +180,7 @@ export function BotfabrikkDemo() {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {['📄 Last opp dokumenter', '⚙️ Konfigurer domene', '🤖 Del med kolleger'].map((feature) => (
+            {['📄 Last opp fagdokumenter', '🤖 Del med kolleger på sekunder'].map((feature) => (
               <span key={feature} className="rounded-full border border-[#e2e8f0] bg-[#f8fafc] px-3 py-1.5 text-xs font-medium text-[#0f172a]">
                 {feature}
               </span>
@@ -171,7 +191,7 @@ export function BotfabrikkDemo() {
         <section className="space-y-4">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6d28d9]">Prøv en bot</p>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {bots.map((bot) => (
               <article key={bot.key} className="flex h-full flex-col rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] p-4">
                 <div className="mb-2 text-2xl" aria-hidden="true">
@@ -193,43 +213,26 @@ export function BotfabrikkDemo() {
 
         <section className="space-y-4">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#6d28d9]">Bestill bot</p>
-          <h3 className="text-2xl font-semibold">Vil du ha en bot for ditt fagområde?</h3>
-          <p className="text-sm text-[#64748b]">
-            Fortell oss om fagdomenet ditt, hvilke dokumenter boten skal kunne, og hvem som skal bruke den.
-          </p>
-
-          <form className="space-y-3 rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] p-4" onSubmit={(event) => event.preventDefault()}>
-            <input
-              type="text"
-              placeholder="Botnavn"
-              className="w-full rounded-xl border border-[#e2e8f0] bg-white px-4 py-2.5 text-sm outline-none ring-[#6d28d9] focus:ring"
-            />
-            <input
-              type="text"
-              placeholder="Fagdomene (f.eks. barnevern, plan og bygg)"
-              className="w-full rounded-xl border border-[#e2e8f0] bg-white px-4 py-2.5 text-sm outline-none ring-[#6d28d9] focus:ring"
-            />
-            <textarea
-              placeholder="Beskriv hva boten skal hjelpe med"
-              rows={4}
-              className="w-full rounded-xl border border-[#e2e8f0] bg-white px-4 py-2.5 text-sm outline-none ring-[#6d28d9] focus:ring"
-            />
-            <div className="rounded-xl border-2 border-dashed border-[#cbd5e1] bg-[#f8fafc] px-4 py-6 text-center text-sm text-[#64748b]">
-              Dra inn fagdokumenter her (PDF, Word)
-            </div>
-          </form>
+          <div className="rounded-2xl border border-violet-200 bg-violet-50 p-6 text-center">
+            <h3 className="text-2xl font-semibold">Vil du teste en bot for ditt fagområde?</h3>
+            <p className="mt-2 text-sm text-[#64748b]">
+              Ta kontakt så setter vi opp en pilot — gjerne med dine egne fagdokumenter.
+            </p>
+          </div>
 
           {!showEmail ? (
-            <button
-              type="button"
-              onClick={() => setShowEmail(true)}
-              className="rounded-xl bg-violet-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-violet-700"
-            >
-              📧 Vis e-postadresse
-            </button>
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowEmail(true)}
+                className="rounded-xl bg-violet-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-violet-700"
+              >
+                📧 Vis e-postadresse
+              </button>
+            </div>
           ) : (
             <div className="flex flex-wrap items-center gap-3 rounded-xl border border-[#e2e8f0] bg-[#f8fafc] px-4 py-3">
-              <span className="text-sm font-medium text-[#0f172a]">marius.granholt.lundervold@tonsberg.kommune.no</span>
+              <span className="break-all text-sm font-medium text-[#0f172a]">marius.granholt.lundervold@tonsberg.kommune.no</span>
               <button
                 type="button"
                 onClick={copyEmail}
@@ -243,7 +246,7 @@ export function BotfabrikkDemo() {
       </div>
 
       {activeBot ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/45 p-4">
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-slate-900/45 p-4">
           <div className="flex h-[80vh] w-full max-w-xl flex-col overflow-hidden rounded-2xl border border-[#e2e8f0] bg-white shadow-xl">
             <div className="flex items-center justify-between border-b border-[#e2e8f0] px-4 py-3">
               <h4 className="text-sm font-semibold text-[#0f172a]">
@@ -275,14 +278,30 @@ export function BotfabrikkDemo() {
                 <p className="text-sm text-[#64748b]">Velg et forslag eller skriv et spørsmål for å se demosvar.</p>
               ) : (
                 <div className="space-y-3">
-                  {chatEntries.map((entry, index) => (
-                    <div key={`${entry.question}-${index}`} className="space-y-2">
+                  {chatEntries.map((entry) => (
+                    <div key={entry.id} className="space-y-2">
                       <div className="ml-auto w-fit max-w-[90%] rounded-xl bg-violet-600 px-3 py-2 text-sm text-white">
                         {entry.question}
                       </div>
-                      <div className="max-w-[95%] rounded-xl border border-[#e2e8f0] bg-[#f8fafc] px-3 py-2 text-sm whitespace-pre-line text-[#0f172a]">
-                        {entry.answer}
-                      </div>
+                      {entry.isThinking ? (
+                        <div className="w-fit rounded-xl border border-[#e2e8f0] bg-[#f8fafc] px-3 py-2">
+                          <div className="flex items-center gap-1">
+                            <span className="h-2 w-2 animate-bounce rounded-full bg-[#6d28d9] delay-0" />
+                            <span
+                              className="h-2 w-2 animate-bounce rounded-full bg-[#6d28d9] delay-150"
+                              style={{ animationDelay: '150ms' }}
+                            />
+                            <span
+                              className="h-2 w-2 animate-bounce rounded-full bg-[#6d28d9] delay-300"
+                              style={{ animationDelay: '300ms' }}
+                            />
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="max-w-[95%] whitespace-pre-line rounded-xl border border-[#e2e8f0] bg-[#f8fafc] px-3 py-2 text-sm text-[#0f172a]">
+                          {entry.answer}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
