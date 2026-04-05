@@ -22,7 +22,24 @@ export const productCategories: Array<{ value: ProductCategory; label: string }>
   { value: 'ai', label: 'AI' },
 ];
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// PRODUKTER — rediger copy her
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Denne filen styrer alle produktkort og produktsider.
+// Du kan trygt redigere følgende felt direkte i GitHub:
+//   name        → vises som tittel overalt
+//   tagline     → kort beskrivelse under tittelen
+//   description → lengre tekst på produktsiden
+//   status      → 'aktiv' | 'beta' | 'eksperiment'
+//   emoji       → ikonet på kortet
+//
+// IKKE endre uten å vite hva du gjør:
+//   slug        → brukes i URL, må matche demo-komponent
+//   category    → brukes til filtrering
+//   color/accent → Tailwind-klasser, må være gyldige
+//   demoAvailable / productMapAvailable → styrer knapper
 export const products: Product[] = [
+  // ─── Sammen ───────────────────────────────
   {
     slug: 'sammen',
     name: 'Sammen',
@@ -37,6 +54,7 @@ export const products: Product[] = [
     productMapAvailable: true,
     liveUrl: '#',
   },
+  // ─── Ukespeil ─────────────────────────────
   {
     slug: 'ukespeil',
     name: 'Ukespeil',
@@ -51,6 +69,7 @@ export const products: Product[] = [
     productMapAvailable: true,
     liveUrl: '#',
   },
+  // ─── StreKI ───────────────────────────────
   {
     slug: 'streki',
     name: 'StreKI',
@@ -65,6 +84,7 @@ export const products: Product[] = [
     productMapAvailable: true,
     liveUrl: '#',
   },
+  // ─── Daily Brian ──────────────────────────
   {
     slug: 'daily-brian',
     name: 'Daily Brian',
@@ -78,6 +98,7 @@ export const products: Product[] = [
     demoAvailable: true,
     productMapAvailable: true,
   },
+  // ─── TemAi ────────────────────────────────
   {
     slug: 'temai',
     name: 'TemAi',
@@ -91,6 +112,7 @@ export const products: Product[] = [
     demoAvailable: true,
     productMapAvailable: true,
   },
+  // ─── Byggesaksdash ────────────────────────
   {
     slug: 'byggesaksdash',
     name: 'Byggesaksdash',
@@ -105,6 +127,7 @@ export const products: Product[] = [
     productMapAvailable: true,
     liveUrl: '#',
   },
+  // ─── Botfabrikk ───────────────────────────
   {
     slug: 'botfabrikk',
     name: 'Botfabrikk',
@@ -118,6 +141,7 @@ export const products: Product[] = [
     demoAvailable: true,
     productMapAvailable: false,
   },
+  // ─── Byråkratens lommekniv ────────────────
   {
     slug: 'byrakratens-lommekniv',
     name: 'Byråkratens lommekniv',
