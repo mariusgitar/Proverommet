@@ -4,6 +4,7 @@ import { DailyBrianDemo } from '@/components/demos/DailyBrianDemo';
 import { SammenDemo } from '@/components/demos/SammenDemo';
 import { UkespeilDemo } from '@/components/demos/UkespeilDemo';
 import { BotfabrikkDemo } from '@/components/demos/BotfabrikkDemo';
+import { TemAiDemo } from '@/components/demos/TemAiDemo';
 import { ProductPage } from '@/components/ProductPage';
 import { LommeknivDemo } from '@/components/demos/LommeknivDemo';
 import { products } from '@/content/products';
@@ -32,7 +33,9 @@ export default function SlugPage({ params }: SlugPageProps) {
             ? <LommeknivDemo />
             : product.slug === 'botfabrikk'
               ? <BotfabrikkDemo />
-              : undefined;
+              : product.slug === 'temai'
+                ? <TemAiDemo />
+                : undefined;
 
   return <ProductPage product={product} demo={demo} />;
 }
