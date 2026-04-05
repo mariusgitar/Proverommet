@@ -43,24 +43,26 @@ export function ProductPage({ product, demo }: ProductPageProps) {
               {statusLabel[product.status]}
             </span>
 
-            <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
-              {product.demoAvailable ? (
-                <a
-                  href="#demo"
-                  className="rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-700"
-                >
-                  Prøv demo ↓
-                </a>
-              ) : null}
-              {product.productMapAvailable ? (
-                <Link
-                  href={`/${product.slug}/produktkart`}
-                  className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
-                >
-                  Produktkart →
-                </Link>
-              ) : null}
-            </div>
+            {product.demoAvailable || product.productMapAvailable ? (
+              <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+                {product.demoAvailable ? (
+                  <a
+                    href="#demo"
+                    className="rounded-xl bg-[#2d5be3] px-4 py-2 text-sm font-medium text-white"
+                  >
+                    Prøv demo ↓
+                  </a>
+                ) : null}
+                {product.productMapAvailable ? (
+                  <Link
+                    href={`/${product.slug}/produktkart`}
+                    className="rounded-xl border border-[#ddd8cc] bg-transparent px-4 py-2 text-sm font-medium text-[#3a3a3a]"
+                  >
+                    Produktkart →
+                  </Link>
+                ) : null}
+              </div>
+            ) : null}
 
             <button
               type="button"

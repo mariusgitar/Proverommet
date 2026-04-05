@@ -48,7 +48,7 @@ export const products: Product[] = [
     accent: 'text-indigo-700',
     emoji: '🪞',
     demoAvailable: true,
-    productMapAvailable: false,
+    productMapAvailable: true,
     liveUrl: '#',
   },
   {
@@ -61,7 +61,7 @@ export const products: Product[] = [
     color: 'bg-purple-50',
     accent: 'text-purple-700',
     emoji: '✨',
-    demoAvailable: true,
+    demoAvailable: false,
     productMapAvailable: true,
     liveUrl: '#',
   },
@@ -75,7 +75,7 @@ export const products: Product[] = [
     color: 'bg-amber-50',
     accent: 'text-amber-700',
     emoji: '🧠',
-    demoAvailable: false,
+    demoAvailable: true,
     productMapAvailable: true,
   },
   {
@@ -88,7 +88,7 @@ export const products: Product[] = [
     color: 'bg-rose-50',
     accent: 'text-rose-700',
     emoji: '📊',
-    demoAvailable: false,
+    demoAvailable: true,
     productMapAvailable: true,
   },
   {
@@ -129,7 +129,7 @@ export const products: Product[] = [
     accent: 'text-emerald-700',
     emoji: '🧰',
     demoAvailable: true,
-    productMapAvailable: true,
+    productMapAvailable: false,
     liveUrl: '#',
   },
 ];
