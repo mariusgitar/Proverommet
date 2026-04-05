@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 
+import { DailyBrianDemo } from '@/components/demos/DailyBrianDemo';
 import { SammenDemo } from '@/components/demos/SammenDemo';
 import { UkespeilDemo } from '@/components/demos/UkespeilDemo';
 import { ProductPage } from '@/components/ProductPage';
@@ -19,7 +20,13 @@ export default function SlugPage({ params }: SlugPageProps) {
   }
 
   const demo =
-    product.slug === 'sammen' ? <SammenDemo /> : product.slug === 'ukespeil' ? <UkespeilDemo /> : undefined;
+    product.slug === 'sammen'
+      ? <SammenDemo />
+      : product.slug === 'ukespeil'
+        ? <UkespeilDemo />
+        : product.slug === 'daily-brian'
+          ? <DailyBrianDemo />
+          : undefined;
 
   return <ProductPage product={product} demo={demo} />;
 }
