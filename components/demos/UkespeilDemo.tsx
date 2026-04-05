@@ -1,5 +1,6 @@
 'use client';
 
+// @ts-expect-error Missing type declarations for canvas-confetti in this environment
 import confetti from 'canvas-confetti';
 import { Inter } from 'next/font/google';
 import { useEffect, useMemo, useState } from 'react';
