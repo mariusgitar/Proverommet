@@ -7,6 +7,7 @@ import { BotfabrikkDemo } from '@/components/demos/BotfabrikkDemo';
 import { TemAiDemo } from '@/components/demos/TemAiDemo';
 import { ProductPage } from '@/components/ProductPage';
 import { LommeknivDemo } from '@/components/demos/LommeknivDemo';
+import { ByggesaksdashDemo } from '@/components/demos/ByggesaksdashDemo';
 import { products } from '@/content/products';
 
 interface SlugPageProps {
@@ -35,7 +36,9 @@ export default function SlugPage({ params }: SlugPageProps) {
               ? <BotfabrikkDemo />
               : product.slug === 'temai'
                 ? <TemAiDemo />
-                : undefined;
+                : product.slug === 'byggesaksdash'
+                  ? <ByggesaksdashDemo />
+                  : undefined;
 
   return <ProductPage product={product} demo={demo} />;
 }
