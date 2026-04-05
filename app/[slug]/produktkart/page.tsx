@@ -4,6 +4,21 @@ import { notFound } from 'next/navigation';
 import { ProductRoadmap } from '@/components/ProductRoadmap';
 import { products } from '@/content/products';
 import type { Roadmap } from '@/content/roadmaps/types';
+import { roadmap as sammenRoadmap } from '@/content/roadmaps/sammen';
+import { roadmap as ukespeilRoadmap } from '@/content/roadmaps/ukespeil';
+import { roadmap as strekiRoadmap } from '@/content/roadmaps/streki';
+import { roadmap as dailyBrianRoadmap } from '@/content/roadmaps/daily-brian';
+import { roadmap as temaiRoadmap } from '@/content/roadmaps/temai';
+import { roadmap as byggesaksdashRoadmap } from '@/content/roadmaps/byggesaksdash';
+
+const roadmaps: Record<string, Roadmap> = {
+  sammen: sammenRoadmap,
+  ukespeil: ukespeilRoadmap,
+  streki: strekiRoadmap,
+  'daily-brian': dailyBrianRoadmap,
+  temai: temaiRoadmap,
+  byggesaksdash: byggesaksdashRoadmap,
+};
 
 interface ProductRoadmapPageProps {
   params: {
@@ -11,24 +26,14 @@ interface ProductRoadmapPageProps {
   };
 }
 
-async function loadRoadmap(slug: string): Promise<Roadmap | null> {
-  try {
-    const module = await import(`@/content/roadmaps/${slug}`);
-
-    return (module.roadmap ?? null) as Roadmap | null;
-  } catch {
-    return null;
-  }
-}
-
-export default async function ProductRoadmapPage({ params }: ProductRoadmapPageProps) {
+export default function ProductRoadmapPage({ params }: ProductRoadmapPageProps) {
   const product = products.find((item) => item.slug === params.slug);
 
   if (!product) {
     notFound();
   }
 
-  const roadmap = await loadRoadmap(product.slug);
+  const roadmap = roadmaps[params.slug];
 
   return (
     <div className="min-h-screen bg-[#f7f5f0]">
