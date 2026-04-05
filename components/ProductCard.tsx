@@ -44,34 +44,36 @@ export function ProductCard({ product }: ProductCardProps) {
             <p className="text-sm text-slate-500">{product.tagline}</p>
           </div>
 
-          <div className="mt-auto flex flex-wrap gap-2">
-            {product.demoAvailable ? (
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  router.push(`/${product.slug}#demo`);
-                }}
-                className={`rounded-md px-3 py-2 text-sm font-medium ${product.color} ${product.accent}`}
-              >
-                Utforsk demo
-              </button>
-            ) : null}
-            {product.productMapAvailable ? (
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  router.push(`/${product.slug}/produktkart`);
-                }}
-                className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-              >
-                Produktkart
-              </button>
-            ) : null}
-          </div>
+          {product.demoAvailable || product.productMapAvailable ? (
+            <div className="mt-auto flex flex-wrap gap-2">
+              {product.demoAvailable ? (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    router.push(`/${product.slug}#demo`);
+                  }}
+                  className="rounded-xl bg-[#2d5be3] px-4 py-2 text-sm font-medium text-white"
+                >
+                  Prøv demo →
+                </button>
+              ) : null}
+              {product.productMapAvailable ? (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    router.push(`/${product.slug}/produktkart`);
+                  }}
+                  className="rounded-xl border border-[#ddd8cc] bg-transparent px-4 py-2 text-sm font-medium text-[#3a3a3a]"
+                >
+                  Produktkart
+                </button>
+              ) : null}
+            </div>
+          ) : null}
 
           <div className="flex items-center gap-2 border-t border-slate-100 pt-3 text-sm text-slate-600">
             <button
