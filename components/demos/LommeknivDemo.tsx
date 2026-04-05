@@ -10,13 +10,13 @@ const tools = [
     name: 'PDF-sammenslåer',
     description:
       'Slå sammen flere PDF-filer til ett dokument — direkte i nettleseren, ingen opplasting til server.',
-    url: 'https://mariusgitar.github.io/lommekniv-for-byrakrater/pdf-merger/',
+    url: 'https://mariusgitar.github.io/PDFer/',
   },
   {
     name: 'QR-kodefabrikk',
     description:
       'Lag QR-koder raskt for lenker, dokumenter eller enkel deling. Med logo og justerbar kvalitet.',
-    url: 'https://mariusgitar.github.io/lommekniv-for-byrakrater/qr-generator/',
+    url: 'https://mariusgitar.github.io/QRfabrikken/',
   },
   {
     name: 'PersonWerner',
@@ -26,13 +26,13 @@ const tools = [
   {
     name: 'Bildebasen',
     description: 'Konverter bilder mellom formater enkelt og greit — direkte i nettleseren.',
-    url: 'https://mariusgitar.github.io/lommekniv-for-byrakrater/bildebasen/',
+    url: 'https://mariusgitar.github.io/Bildebasen/',
   },
   {
     name: 'Bakgrunnsviskeren',
     description:
       'Fjerner bakgrunn fra både enkle og komplekse bilder – så effektiv at selv kaffeflekken i Teams-portrettet begynner å svette.',
-    url: 'https://mariusgitar.github.io/bakgrunnsfjerner/',
+    url: 'https://mariusgitar.github.io/Bakgrunnsvisker/',
   },
 ] as const;
 
@@ -51,6 +51,14 @@ export function LommeknivDemo() {
             En liten samling digitale småverktøy for deg som lever blant PDF-er, skjemaer og de små flokene som
             dukker opp før lunsj.
           </p>
+          <a
+            href="https://mariusgitar.github.io/lommekniv-for-byrakrater/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block rounded-xl bg-[#1a3344] px-5 py-3 font-semibold text-white"
+          >
+            Besøk Byråkratens lommekniv →
+          </a>
         </div>
       </header>
 
