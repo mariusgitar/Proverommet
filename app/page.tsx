@@ -22,7 +22,7 @@ export default function HomePage() {
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
       <header className="mb-8 space-y-2">
         <p className="text-3xl font-black tracking-tight text-slate-900">Prøverommet</p>
-        <p className="text-slate-600">Verktøy bygget for kommunal hverdag</p>
+        <p className="text-slate-600">Verktøy bygget for kommunal hverdag. Ikke for robusthet, men for utrpøving. "Vibe-kodet" av Marius Granholt Lundervold. </p>
       </header>
 
       <section className="mb-6 flex flex-wrap gap-2" aria-label="Kategorifilter">
