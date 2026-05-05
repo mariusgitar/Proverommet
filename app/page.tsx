@@ -22,7 +22,7 @@ export default function HomePage() {
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
       <header className="mb-8 space-y-2">
         <p className="text-3xl font-black tracking-tight text-slate-900">Prøverommet</p>
-        <p className="text-slate-600">"Dette er verkstedet mitt. Verktøy bygget i Tønsberg kommune for å gjøre hverdagen litt enklere, møtene litt bedre og dataene litt mer forståelige. Alt er vibekoda — raskt, pragmatisk og alltid i beta.Hilsen Marius Granholt Lundervold". </p>
+        <p className="text-slate-600">"Dette er verkstedet mitt. Verktøy bygget i Tønsberg kommune for å gjøre hverdagen litt enklere, møtene litt bedre og dataene litt mer forståelige. Alt er vibekoda — raskt, pragmatisk og alltid i beta. Hilsen Marius". </p>
       </header>
 
       <section className="mb-6 flex flex-wrap gap-2" aria-label="Kategorifilter">
