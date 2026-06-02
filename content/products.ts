@@ -141,6 +141,22 @@ export const products: Product[] = [
     demoAvailable: true,
     productMapAvailable: false,
   },
+
+  // ─── Syntest ───────────────────────────────
+  {
+    slug: 'syntest',
+    name: 'Syntest',
+    tagline: 'Test tjenesteendringer mot digitale innbyggertvillinger før beslutningene er tatt.',
+    description: 'Syntest lar kommunalt ansatte teste hypoteser mot AI-drevne personas som svarer autentisk ut fra norsk kommunal hverdag. Demoen er hardkodet med ferdige tekstforslag og strukturerte svar for bekymringer, positive sider, villighet, barrierer og forslag.',
+    category: 'ai',
+    status: 'eksperiment',
+    color: 'bg-violet-50',
+    accent: 'text-violet-700',
+    emoji: '🧪',
+    demoAvailable: true,
+    productMapAvailable: true,
+  },
+
   // ─── Byråkratens lommekniv ────────────────
   {
     slug: 'byrakratens-lommekniv',
