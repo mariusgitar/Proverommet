@@ -69,23 +69,6 @@ export const products: Product[] = [
     productMapAvailable: true,
     liveUrl: '#',
   },
-
-  // ─── Workshop Timer ───────────────────────
-  {
-    slug: 'workshop-timer',
-    name: 'Workshop Timer',
-    tagline: 'Synlig tidtaking for workshops med agenda, segmentoverganger og fullskjermvisning for rommet.',
-    description: 'Workshop Timer hjelper fasilitatorer å planlegge, kjøre og justere tidsbruk i workshops. Løsningen har timermotor, agendabygger, visningsmodus og varsler, med videre retning mot deling, maler og bedre støtte for fasilitatorflyt.',
-    category: 'workshop',
-    status: 'beta',
-    color: 'bg-cyan-50',
-    accent: 'text-cyan-700',
-    emoji: '⏱️',
-    demoAvailable: true,
-    productMapAvailable: true,
-    liveUrl: 'https://workshop-timer-mauve.vercel.app/',
-  },
-
   // ─── StreKI ───────────────────────────────
   {
     slug: 'streki',
