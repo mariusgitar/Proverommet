@@ -10,6 +10,7 @@ import { roadmap as strekiRoadmap } from '@/content/roadmaps/streki';
 import { roadmap as dailyBrianRoadmap } from '@/content/roadmaps/daily-brian';
 import { roadmap as temaiRoadmap } from '@/content/roadmaps/temai';
 import { roadmap as byggesaksdashRoadmap } from '@/content/roadmaps/byggesaksdash';
+import { roadmap as syntestRoadmap } from '@/content/roadmaps/syntest';
 
 const roadmaps: Record<string, Roadmap> = {
   sammen: sammenRoadmap,
@@ -18,6 +19,7 @@ const roadmaps: Record<string, Roadmap> = {
   'daily-brian': dailyBrianRoadmap,
   temai: temaiRoadmap,
   byggesaksdash: byggesaksdashRoadmap,
+  syntest: syntestRoadmap,
 };
 
 interface ProductRoadmapPageProps {
