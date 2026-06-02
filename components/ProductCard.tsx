@@ -25,6 +25,7 @@ const statusLabel: Record<Product['status'], string> = {
 export function ProductCard({ product }: ProductCardProps) {
   const router = useRouter();
   const { count, hasReacted, react } = useReaction(product.slug);
+  const liveUrl = product.liveUrl && product.liveUrl !== '#' ? product.liveUrl : null;
 
   return (
     <Link href={`/${product.slug}`} className="block h-full">
@@ -44,15 +45,15 @@ export function ProductCard({ product }: ProductCardProps) {
             <p className="text-sm text-slate-500">{product.tagline}</p>
           </div>
 
-          {product.liveUrl || product.demoAvailable || product.productMapAvailable ? (
+          {liveUrl || product.demoAvailable ? (
             <div className="mt-auto flex flex-wrap gap-2">
-              {product.liveUrl ? (
+              {liveUrl ? (
                 <button
                   type="button"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    window.open(product.liveUrl, '_blank', 'noopener,noreferrer');
+                    window.open(liveUrl, '_blank', 'noopener,noreferrer');
                   }}
                   className="rounded-xl bg-[#2d5be3] px-4 py-2 text-sm font-medium text-white"
                 >
@@ -70,19 +71,6 @@ export function ProductCard({ product }: ProductCardProps) {
                   className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white"
                 >
                   Prøv demo →
-                </button>
-              ) : null}
-              {product.productMapAvailable ? (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    router.push(`/${product.slug}/produktkart`);
-                  }}
-                  className="rounded-xl border border-[#ddd8cc] bg-transparent px-4 py-2 text-sm font-medium text-[#3a3a3a]"
-                >
-                  Produktkart
                 </button>
               ) : null}
             </div>
