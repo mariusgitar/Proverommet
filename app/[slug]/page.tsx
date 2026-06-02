@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 import { DailyBrianDemo } from '@/components/demos/DailyBrianDemo';
 import { SammenDemo } from '@/components/demos/SammenDemo';
@@ -22,6 +22,10 @@ export default function SlugPage({ params }: SlugPageProps) {
 
   if (!product) {
     notFound();
+  }
+
+  if (product.redirectToLive && product.liveUrl) {
+    redirect(product.liveUrl);
   }
 
   const demo =

@@ -12,6 +12,7 @@ import { roadmap as temaiRoadmap } from '@/content/roadmaps/temai';
 import { roadmap as byggesaksdashRoadmap } from '@/content/roadmaps/byggesaksdash';
 import { roadmap as syntestRoadmap } from '@/content/roadmaps/syntest';
 import { roadmap as workshopTimerRoadmap } from '@/content/roadmaps/workshop-timer';
+import { roadmap as schedulerRoadmap } from '@/content/roadmaps/scheduler';
 
 const roadmaps: Record<string, Roadmap> = {
   sammen: sammenRoadmap,
@@ -22,6 +23,7 @@ const roadmaps: Record<string, Roadmap> = {
   byggesaksdash: byggesaksdashRoadmap,
   syntest: syntestRoadmap,
   'workshop-timer': workshopTimerRoadmap,
+  scheduler: schedulerRoadmap,
 };
 
 interface ProductRoadmapPageProps {
