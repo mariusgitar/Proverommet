@@ -5,6 +5,7 @@ import { SammenDemo } from '@/components/demos/SammenDemo';
 import { UkespeilDemo } from '@/components/demos/UkespeilDemo';
 import { BotfabrikkDemo } from '@/components/demos/BotfabrikkDemo';
 import { TemAiDemo } from '@/components/demos/TemAiDemo';
+import { SyntestDemo } from '@/components/demos/SyntestDemo';
 import { ProductPage } from '@/components/ProductPage';
 import { LommeknivDemo } from '@/components/demos/LommeknivDemo';
 import { ByggesaksdashDemo } from '@/components/demos/ByggesaksdashDemo';
@@ -38,7 +39,9 @@ export default function SlugPage({ params }: SlugPageProps) {
                 ? <TemAiDemo />
                 : product.slug === 'byggesaksdash'
                   ? <ByggesaksdashDemo />
-                  : undefined;
+                  : product.slug === 'syntest'
+                    ? <SyntestDemo />
+                    : undefined;
 
   return <ProductPage product={product} demo={demo} />;
 }
