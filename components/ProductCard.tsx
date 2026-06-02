@@ -25,7 +25,6 @@ const statusLabel: Record<Product['status'], string> = {
 export function ProductCard({ product }: ProductCardProps) {
   const router = useRouter();
   const { count, hasReacted, react } = useReaction(product.slug);
-  const liveDemoUrl = product.liveUrl && product.liveUrl !== '#' ? product.liveUrl : undefined;
 
   return (
     <Link href={`/${product.slug}`} className="block h-full">
@@ -53,16 +52,11 @@ export function ProductCard({ product }: ProductCardProps) {
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    if (liveDemoUrl) {
-                      window.open(liveDemoUrl, '_blank', 'noopener,noreferrer');
-                      return;
-                    }
-
                     router.push(`/${product.slug}#demo`);
                   }}
                   className="rounded-xl bg-[#2d5be3] px-4 py-2 text-sm font-medium text-white"
                 >
-                  {liveDemoUrl ? 'Åpne løsning ↗' : 'Prøv demo →'}
+                  Prøv demo →
                 </button>
               ) : null}
               {product.productMapAvailable ? (

@@ -28,7 +28,6 @@ const statusLabel: Record<Product['status'], string> = {
 export function ProductPage({ product, demo }: ProductPageProps) {
   const { count, hasReacted, react } = useReaction(product.slug);
   const categoryLabel = productCategories.find((category) => category.value === product.category)?.label ?? product.category;
-  const liveDemoUrl = product.liveUrl && product.liveUrl !== '#' ? product.liveUrl : undefined;
 
   return (
     <main className="min-h-screen bg-[#f7f5f0] px-4 py-12 sm:px-6 lg:px-8">
@@ -48,12 +47,10 @@ export function ProductPage({ product, demo }: ProductPageProps) {
               <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
                 {product.demoAvailable ? (
                   <a
-                    href={liveDemoUrl ?? '#demo'}
-                    target={liveDemoUrl ? '_blank' : undefined}
-                    rel={liveDemoUrl ? 'noreferrer' : undefined}
+                    href="#demo"
                     className="rounded-xl bg-[#2d5be3] px-4 py-2 text-sm font-medium text-white"
                   >
-                    {liveDemoUrl ? 'Åpne løsning ↗' : 'Prøv demo ↓'}
+                    Prøv demo ↓
                   </a>
                 ) : null}
                 {product.productMapAvailable ? (
@@ -94,32 +91,12 @@ export function ProductPage({ product, demo }: ProductPageProps) {
         <section id="demo" className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
           <h2 className="mb-6 font-serif text-3xl text-slate-900">Demo</h2>
           {demo ?? (
-            liveDemoUrl ? (
-              <div className="flex min-h-64 flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
-                <span className="text-6xl" aria-hidden="true">
-                  {product.emoji}
-                </span>
-                <div className="space-y-2">
-                  <p className="text-lg font-medium text-slate-700">Løsningen ligger eksternt</p>
-                  <p className="text-sm text-slate-500">Åpne den direkte for å teste siste versjon.</p>
-                </div>
-                <a
-                  href={liveDemoUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-xl bg-[#2d5be3] px-4 py-2 text-sm font-medium text-white"
-                >
-                  Åpne løsning ↗
-                </a>
-              </div>
-            ) : (
-              <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
-                <span className="text-6xl" aria-hidden="true">
-                  {product.emoji}
-                </span>
-                <p className="text-lg font-medium text-slate-700">Demo kommer</p>
-              </div>
-            )
+            <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+              <span className="text-6xl" aria-hidden="true">
+                {product.emoji}
+              </span>
+              <p className="text-lg font-medium text-slate-700">Demo kommer</p>
+            </div>
           )}
         </section>
 
