@@ -11,7 +11,6 @@ export interface Product {
   demoAvailable: boolean;
   productMapAvailable: boolean;
   liveUrl?: string;
-  redirectToLive?: boolean;
 }
 
 export type ProductCategory = Product['category'];
@@ -87,12 +86,12 @@ export const products: Product[] = [
     liveUrl: 'https://workshop-timer-mauve.vercel.app',
   },
 
-  // ─── Scheduler ─────────────────────────────
+  // ─── Workshop agenda ───────────────────────
   {
     slug: 'scheduler',
-    name: 'Scheduler',
-    tagline: 'Strukturert agenda-bygger for fasilitatorer og kursholdere der tid alltid står i sentrum.',
-    description: 'Scheduler er et planleggingsverktøy bygget spesielt for fasilitatorer og kursholdere. Blokker stables i seksjoner, varighet summeres automatisk, og agendaen kan deles med kollegaer eller deltakere på sekunder — slik at mindre tid går til logistikk og mer tid kan brukes på innholdet.',
+    name: 'Workshop agenda',
+    tagline: 'Strukturert planleggingsverktøy for fasilitatorer og kursholdere der tid alltid står i sentrum.',
+    description: 'Workshop agenda er et planleggingsverktøy bygget spesielt for fasilitatorer og kursholdere. Der andre bruker Word-tabeller eller generiske kalenderverktøy, gir Workshop agenda en strukturert arbeidsflate der tid alltid er i sentrum: blokker stables, seksjoner summeres automatisk, og agendaen er klar til å deles med kollegaer eller deltakere på sekunder. Resultatet er mindre tid brukt på logistikk og mer fokus på innholdet.',
     category: 'workshop',
     status: 'beta',
     color: 'bg-cyan-50',
@@ -101,7 +100,6 @@ export const products: Product[] = [
     demoAvailable: false,
     productMapAvailable: true,
     liveUrl: 'https://scheduler-sand-one.vercel.app',
-    redirectToLive: true,
   },
 
   // ─── StreKI ───────────────────────────────
