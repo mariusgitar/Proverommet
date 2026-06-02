@@ -75,7 +75,7 @@ export const products: Product[] = [
     slug: 'workshop-timer',
     name: 'Workshop Timer',
     tagline: 'En tydelig timer for fasilitatorer som vil holde workshops og møter på sporet.',
-    description: 'Workshop Timer gjør tid synlig i rommet med en enkel nedtelling, agendaoversikt og fleksibel øktstruktur. Målet er at fasilitator kan starte raskt, justere underveis og holde fokus på møtet i stedet for verktøyet.',
+    description: 'Workshop Timer gjør tid synlig i rommet med en enkel nedtelling, QR-deling og egne visninger for fasilitatør og deltakere. Målet er null friksjon for deltakere, full kontroll for fasilitatøren og støtte for øvelser som Crazy Eights gjennom en hel workshopdag.',
     category: 'workshop',
     status: 'beta',
     color: 'bg-orange-50',
