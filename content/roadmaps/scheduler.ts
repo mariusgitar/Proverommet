@@ -180,7 +180,7 @@ export const roadmap: Roadmap = {
     {
       emoji: '🌱',
       title: 'Iterativt og levende',
-      description: 'Scheduler utvikles i takt med faktisk bruk og tilbakemeldinger fra virkelige workshoper.',
+      description: 'Workshop agenda utvikles i takt med faktisk bruk og tilbakemeldinger fra virkelige workshoper.',
     },
   ],
 }
