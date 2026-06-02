@@ -7,7 +7,7 @@ import {
   getSyntestPersonaById,
   syntestExamples,
   syntestPersonas,
-  syntestPresetResults,
+  syntestPresetResultsByExample,
   type SyntestResult,
 } from '@/lib/syntest';
 
@@ -18,6 +18,8 @@ const inter = Inter({
 
 const filters = ['Alle', 'Innbyggere', 'Ansatte', 'Næringsliv', 'Offentlige instanser', 'Politikere'];
 const modes = ['Hypotesetest', 'Kommunikasjon', 'Høring'];
+const customHypothesisWarning =
+  'dette er en simulering, så får å få svar må du bruke et av tekstforslagene under';
 
 type Filter = (typeof filters)[number];
 
@@ -61,6 +63,9 @@ export function SyntestDemo() {
 
     return syntestPersonas.filter((persona) => persona.category === activeFilter);
   }, [activeFilter]);
+  const selectedExample = syntestExamples.find((example) => example === hypothesis.trim());
+  const isCustomHypothesis = hypothesis.trim().length > 0 && !selectedExample;
+  const canSimulate = Boolean(selectedExample) && selectedPersonaIds.length > 0 && !isSimulating;
 
   useEffect(() => {
     if (!isSimulating) {
@@ -68,16 +73,18 @@ export function SyntestDemo() {
     }
 
     const timeoutId = window.setTimeout(() => {
+      const presetResults = selectedExample ? syntestPresetResultsByExample[selectedExample] : undefined;
+
       setResults(
         selectedPersonaIds
-          .map((personaId) => syntestPresetResults[personaId])
+          .map((personaId) => presetResults?.[personaId])
           .filter((result): result is SyntestResult => Boolean(result)),
       );
       setIsSimulating(false);
     }, 1200);
 
     return () => window.clearTimeout(timeoutId);
-  }, [isSimulating, selectedPersonaIds]);
+  }, [isSimulating, selectedExample, selectedPersonaIds]);
 
   const togglePersona = (personaId: string) => {
     setSelectedPersonaIds((current) =>
@@ -92,8 +99,8 @@ export function SyntestDemo() {
   const simulate = () => {
     const trimmedHypothesis = hypothesis.trim();
 
-    if (!trimmedHypothesis) {
-      setError('Skriv inn en hypotese eller velg et hurtigeksempel først.');
+    if (!trimmedHypothesis || !selectedExample) {
+      setError(customHypothesisWarning);
       return;
     }
 
@@ -167,6 +174,7 @@ export function SyntestDemo() {
                   key={persona.id}
                   type="button"
                   onClick={() => togglePersona(persona.id)}
+                  disabled={isSimulating}
                   className={`relative flex min-h-[170px] flex-col items-center rounded-2xl border bg-white p-5 text-center transition ${
                     isSelected
                       ? 'border-violet-300 shadow-[0_12px_28px_rgba(15,23,42,0.16)] ring-2 ring-violet-100'
@@ -206,17 +214,32 @@ export function SyntestDemo() {
             <textarea
               id="syntest-hypothesis"
               value={hypothesis}
-              onChange={(event) => setHypothesis(event.target.value)}
+              disabled={isSimulating}
+              onChange={(event) => {
+                setHypothesis(event.target.value);
+                setError('');
+                setResults([]);
+              }}
               placeholder="Beskriv tjenesteendringen eller tiltaket du vil teste..."
               className="mt-3 min-h-[96px] w-full resize-none rounded-xl border border-[#e2e8f0] bg-white p-4 text-sm outline-none transition placeholder:text-[#94a3b8] focus:border-violet-400 focus:ring-2 focus:ring-violet-100"
             />
 
+            {isCustomHypothesis ? (
+              <p className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm font-medium text-amber-800">
+                {customHypothesisWarning}
+              </p>
+            ) : null}
             <div className="mt-3 flex flex-wrap gap-2">
               {syntestExamples.map((example) => (
                 <button
                   key={example}
                   type="button"
-                  onClick={() => setHypothesis(example)}
+                  disabled={isSimulating}
+                  onClick={() => {
+                    setHypothesis(example);
+                    setError('');
+                    setResults([]);
+                  }}
                   className="rounded-full bg-[#f1f5f9] px-3 py-1.5 text-xs text-[#334155] transition hover:bg-violet-50 hover:text-violet-700"
                 >
                   {example}
@@ -230,7 +253,7 @@ export function SyntestDemo() {
               <button
                 type="button"
                 onClick={simulate}
-                disabled={isSimulating || selectedPersonaIds.length === 0}
+                disabled={!canSimulate}
                 className="rounded-xl bg-violet-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-violet-600 disabled:cursor-not-allowed disabled:bg-violet-300"
               >
                 {isSimulating ? 'Simulerer...' : `Simuler ${selectedPersonaIds.length} persona(s)`}
