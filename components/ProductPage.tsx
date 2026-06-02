@@ -43,12 +43,22 @@ export function ProductPage({ product, demo }: ProductPageProps) {
               {statusLabel[product.status]}
             </span>
 
-            {product.demoAvailable || product.productMapAvailable ? (
+            {product.liveUrl || product.demoAvailable || product.productMapAvailable ? (
               <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
+                {product.liveUrl ? (
+                  <a
+                    href={product.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-xl bg-[#2d5be3] px-4 py-2 text-sm font-medium text-white"
+                  >
+                    Åpne app →
+                  </a>
+                ) : null}
                 {product.demoAvailable ? (
                   <a
                     href="#demo"
-                    className="rounded-xl bg-[#2d5be3] px-4 py-2 text-sm font-medium text-white"
+                    className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white"
                   >
                     Prøv demo ↓
                   </a>
@@ -88,17 +98,19 @@ export function ProductPage({ product, demo }: ProductPageProps) {
           </div>
         </section>
 
-        <section id="demo" className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
-          <h2 className="mb-6 font-serif text-3xl text-slate-900">Demo</h2>
-          {demo ?? (
-            <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
-              <span className="text-6xl" aria-hidden="true">
-                {product.emoji}
-              </span>
-              <p className="text-lg font-medium text-slate-700">Demo kommer</p>
-            </div>
-          )}
-        </section>
+        {product.demoAvailable ? (
+          <section id="demo" className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
+            <h2 className="mb-6 font-serif text-3xl text-slate-900">Demo</h2>
+            {demo ?? (
+              <div className="flex min-h-64 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+                <span className="text-6xl" aria-hidden="true">
+                  {product.emoji}
+                </span>
+                <p className="text-lg font-medium text-slate-700">Demo kommer</p>
+              </div>
+            )}
+          </section>
+        ) : null}
 
         <footer className="pb-4 text-center text-sm text-slate-600">
           <Link href="/" className="transition hover:text-slate-900">

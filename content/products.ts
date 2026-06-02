@@ -69,6 +69,23 @@ export const products: Product[] = [
     productMapAvailable: true,
     liveUrl: '#',
   },
+
+  // ─── Workshop Timer ───────────────────────
+  {
+    slug: 'workshop-timer',
+    name: 'Workshop Timer',
+    tagline: 'En tydelig timer for fasilitatorer som vil holde workshops og møter på sporet.',
+    description: 'Workshop Timer gjør tid synlig i rommet med en enkel nedtelling, agendaoversikt og fleksibel øktstruktur. Målet er at fasilitator kan starte raskt, justere underveis og holde fokus på møtet i stedet for verktøyet.',
+    category: 'workshop',
+    status: 'beta',
+    color: 'bg-orange-50',
+    accent: 'text-orange-700',
+    emoji: '⏱️',
+    demoAvailable: false,
+    productMapAvailable: true,
+    liveUrl: 'https://workshop-timer-mauve.vercel.app',
+  },
+
   // ─── StreKI ───────────────────────────────
   {
     slug: 'streki',
