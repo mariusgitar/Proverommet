@@ -44,8 +44,21 @@ export function ProductCard({ product }: ProductCardProps) {
             <p className="text-sm text-slate-500">{product.tagline}</p>
           </div>
 
-          {product.demoAvailable || product.productMapAvailable ? (
+          {product.liveUrl || product.demoAvailable || product.productMapAvailable ? (
             <div className="mt-auto flex flex-wrap gap-2">
+              {product.liveUrl ? (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.open(product.liveUrl, '_blank', 'noopener,noreferrer');
+                  }}
+                  className="rounded-xl bg-[#2d5be3] px-4 py-2 text-sm font-medium text-white"
+                >
+                  Åpne app →
+                </button>
+              ) : null}
               {product.demoAvailable ? (
                 <button
                   type="button"
@@ -54,7 +67,7 @@ export function ProductCard({ product }: ProductCardProps) {
                     e.stopPropagation();
                     router.push(`/${product.slug}#demo`);
                   }}
-                  className="rounded-xl bg-[#2d5be3] px-4 py-2 text-sm font-medium text-white"
+                  className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white"
                 >
                   Prøv demo →
                 </button>
