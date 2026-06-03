@@ -15,6 +15,20 @@ export interface Product {
 
 export type ProductCategory = Product['category'];
 
+export const productCategoryAliases: Record<string, ProductCategory> = {
+  workshop: 'workshop',
+  analyse: 'analyse',
+  verktoy: 'verktoy',
+  verktøy: 'verktoy',
+  ai: 'ai',
+};
+
+export function getProductCategoryFromSlug(slug: string) {
+  const normalizedSlug = decodeURIComponent(slug).toLowerCase();
+
+  return productCategoryAliases[normalizedSlug];
+}
+
 export const productCategories: Array<{ value: ProductCategory; label: string }> = [
   { value: 'workshop', label: 'Workshop' },
   { value: 'analyse', label: 'Analyse' },
@@ -60,7 +74,7 @@ export const products: Product[] = [
     name: 'Ukespeil',
     tagline: 'Rask og morsom app for å planlegge og registrere prosjekttimer',
     description: 'Hjelper team å fange opp mønstre i timebruk og prioriteringer.',
-    category: 'workshop',
+    category: 'verktoy',
     status: 'beta',
     color: 'bg-indigo-50',
     accent: 'text-indigo-700',
