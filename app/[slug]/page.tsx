@@ -6,10 +6,11 @@ import { UkespeilDemo } from '@/components/demos/UkespeilDemo';
 import { BotfabrikkDemo } from '@/components/demos/BotfabrikkDemo';
 import { TemAiDemo } from '@/components/demos/TemAiDemo';
 import { SyntestDemo } from '@/components/demos/SyntestDemo';
+import { ProductOverview } from '@/components/ProductOverview';
 import { ProductPage } from '@/components/ProductPage';
 import { LommeknivDemo } from '@/components/demos/LommeknivDemo';
 import { ByggesaksdashDemo } from '@/components/demos/ByggesaksdashDemo';
-import { products } from '@/content/products';
+import { getProductCategoryFromSlug, products } from '@/content/products';
 
 interface SlugPageProps {
   params: {
@@ -18,6 +19,12 @@ interface SlugPageProps {
 }
 
 export default function SlugPage({ params }: SlugPageProps) {
+  const category = getProductCategoryFromSlug(params.slug);
+
+  if (category) {
+    return <ProductOverview initialFilter={category} />;
+  }
+
   const product = products.find((item) => item.slug === params.slug);
 
   if (!product) {
